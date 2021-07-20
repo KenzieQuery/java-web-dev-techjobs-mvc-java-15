@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org/">
+<!--
+// You’ll see a search form (in both the browser and template file) that gives the user the option of searching by a
+// given Job field, or across all fields. This is an exact visual analog of our console application.
+// This template will be used to display search results, in addition to rendering the form. This will give the nice
+// user experience of easily searching multiple times in a row.
+-->
 <head th:replace="fragments :: head">
 </head>
 <body>
-
+<!--For the fragment to work properly in both files, the variables passed in by model.addAttribute() must use the same names.-->
 <div th:replace="fragments :: page-header"></div>
-
 <div class="container body-content">
-
     <h1 th:text="${#strings.capitalizeWords(title)}"></h1>
-
     <form th:action="@{/search/results}" method = "post">
         <h2>Search by:</h2>
-
         <p>
             <span th:each="column : ${columns}">
                 <input
@@ -23,20 +25,57 @@
                         th:checked="${column.key == 'all'}"/>
                 <label th:for="${column.key}" th:text="${column.value}"></label>
             </span>
-
         </p>
-
         <p>
             <label for="searchTerm">Keyword:</label>
             <input type="text" name="searchTerm" id="searchTerm" />
         </p>
-
         <input type="submit" value="Search" />
     </form>
-
     <hr />
 
     <!-- TODO #4 - Loop over the search results to display all job fields. -->
+    <!--//In search.html, create a loop to display each job passed in from the controller.
+        //Put the job results into a table, similar to what you did for the list-jobs view.
+        //most of this was copied from list-jobs.html for looping through.-->
+    <table class="job-listing" th:each="job : ${jobs}">
+        <tr>
+            <!--// Row for ID-->
+            <td>ID</td>
+            <!--// Cell for linking to and filling ID-->
+            <td th:text="${job.getId()}"></td>
+        </tr>
+        <tr>
+            <!--// Row for Name-->
+            <td>Name</td>
+            <!--// Cell for linking to and filling Name-->
+            <td th:text="${job.getName()}"></td>
+        </tr>
+        <tr>
+            <!--// Row for Employer-->
+            <td>Employer</td>
+            <!--// Cell for linking to and filling Employer-->
+            <td th:text="${job.getEmployer()}"></td>
+        </tr>
+        <tr>
+            <!--// Row for Location-->
+            <td>Location</td>
+            <!--// Cell for linking to and filling Location-->
+            <td th:text="${job.getLocation()}"></td>
+        </tr>
+        <tr>
+            <!--// Row for Position Type-->
+            <td>Position Type</td>
+            <!--// Cell for linking to and filling PositionType-->
+            <td th:text="${job.getPositionType()}"></td>
+        </tr>
+        <tr>
+            <!--// Row for Skill-->
+            <td>Skill</td>
+            <!--// Cell for linking to and filling Core Competency-->
+            <td th:text="${job.getCoreCompetency()}"></td>
+        </tr>
+    </table>
 
 </div>
 
